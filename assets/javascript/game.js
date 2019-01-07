@@ -18,6 +18,7 @@ var enemyArray = [];
 var enemy = [];
 var playerHealth = 0;
 var playerAttack = 0;
+var playerBaseAttack = 0;
 var enemyHealth = 0;
 var enemyCounter = 0;
 
@@ -69,6 +70,8 @@ $(document).ready(function() {
             chooseEnemy();
         playerHealth = player[0].health;
         playerAttack = player[0].attack;
+        playerBaseAttack = player[0].attack;
+        $("#playerHP").html("<h3>Player Health: <span id='php'>"+playerHealth+"</span></h3>");
         console.log(playerHealth,playerAttack);
     })
 
@@ -81,7 +84,8 @@ $(document).ready(function() {
             enemyCard.addClass('card enemyCard');
             enemyCard.attr('src', enemy[0].image);
             $('#enemyZone').append(enemyCard);
-        $("#buttonZone").append(
+        
+        $("#buttonZone").empty().append(
             $('<button/>', {
                 text: "Attack", 
                 class: "btn btn-danger btn-lg mt-5",
@@ -95,13 +99,28 @@ $(document).ready(function() {
         instructions("Attack");
         enemyHealth = enemy[0].health;
         enemyCounter = enemy[0].counter;
+        $("#enemyHP").html("<h3>Enemy Health: <span id='ehp'>"+enemyHealth+"</span></h3>");
+        console.log(enemyHealth,enemyCounter);
     })
 
     // Attack your opponent
 
-    // function combat() {
-
-    // }
+    function combat() {
+        console.log(playerAttack);
+        enemyHealth -= playerAttack;
+        $("#ehp").html(enemyHealth);
+        playerAttack += playerBaseAttack;
+        if (enemyHealth > 0){
+            playerHealth -= enemyCounter;
+            $("#php").html(playerHealth);
+        } else {
+            $("#instructions, #enemyZone, #ehp").empty();
+            instructions("Select New Enemy")
+        }
+        if (playerHealth <= 0){
+            gameOver();
+        } else {}
+    }
 
 function clearTop(){
     $("#cardZone, #instructions").empty();
