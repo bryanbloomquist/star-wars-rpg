@@ -4,17 +4,11 @@ body {
 }
 
 .card {
-    width: 200px;
     margin: 10px;
+    width: 200px;
     float: left;
 }
 
 .btn {
     margin: auto;
 }
-
-.mirror {
-    -moz-transform: scale(-1, 1);
-    -webkit-transform: scale(-1, 1);
-    transform: scale(-1, 1);
- }

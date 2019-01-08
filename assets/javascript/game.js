@@ -22,15 +22,13 @@ var playerBaseAttack = 0;
 var enemyHealth = 0;
 var enemyCounter = 0;
 var playerID = "";
+var enemyChosen = false;
 
 $(document).ready(function() {
 
     // Set The Game Function
-
     function playGame() {
-
         instructions("Choose A Side");
-
         for (var i=0; i<choose.length; i++) {
             var chooseCard = $("<img>");
             chooseCard.addClass("card chooseCard");
@@ -38,52 +36,52 @@ $(document).ready(function() {
             chooseCard.attr("id", choose[i].id);
             $("#cardZone").append(chooseCard);
         }
+    }
 
-        // Choose a side    
+    // Choose a side    
+    $(document).on("click", ".chooseCard", function(){
+        var side = ($(this).attr("id"));
+        if (side === "lightSide") {
+            playerArray = lightSide.slice();
+            enemyArray = darkSide.slice();
+        } else if (side === "darkSide") {
+            playerArray = darkSide.slice();
+            enemyArray = lightSide.slice();
+        };
+        clearTop();
+        instructions("Choose Your Fighter");
+        for (var i=0; i<playerArray.length; i++) {
+            var fighterCard = $("<img>");
+            fighterCard.addClass("card fighterCard");
+            fighterCard.attr("src", playerArray[i].image);
+            fighterCard.attr("id", i);
+            $("#cardZone").append(fighterCard);
+        }
+    })
 
-        $(document).on("click", ".chooseCard", function(){
-            var side = ($(this).attr("id"));
-            if (side === "lightSide") {
-                playerArray = lightSide.slice();
-                enemyArray = darkSide.slice();
-            } else if (side === "darkSide") {
-                playerArray = darkSide.slice();
-                enemyArray = lightSide.slice();
-            };
+    // Choose your fighter
+    $(document).on("click", ".fighterCard", function(){
+        var x = ($(this).attr("id"));
+        player = playerArray.splice(x,1);
+            var playerCard = $("<img>");
+            playerCard.addClass("card playerCard");
+            playerCard.attr("src", player[0].image);
+            $("#playerZone").append(playerCard);
             clearTop();
-            instructions("Choose Your Fighter");
-            for (var i=0; i<playerArray.length; i++) {
-                var fighterCard = $("<img>");
-                fighterCard.addClass("card fighterCard");
-                fighterCard.attr("src", playerArray[i].image);
-                fighterCard.attr("id", i);
-                $("#cardZone").append(fighterCard);
-            }
-        })
+            instructions("Choose Your Opponent");
+            chooseEnemy();
+        playerHealth = player[0].health;
+        playerAttack = player[0].attack;
+        playerBaseAttack = player[0].attack;
+        playerID = player[0].name;
+        $("#playerHP").html("<h3>Player Health: <span id='php'>"+playerHealth+"</span></h3>");
+        console.log(playerHealth,playerAttack);
+    })
 
-        // Choose your fighter
-
-        $(document).on("click", ".fighterCard", function(){
-            var x = ($(this).attr("id"));
-            player = playerArray.splice(x,1);
-                var playerCard = $("<img>");
-                playerCard.addClass("card playerCard");
-                playerCard.attr("src", player[0].image);
-                $("#playerZone").append(playerCard);
-                clearTop();
-                instructions("Choose Your Opponent");
-                chooseEnemy();
-            playerHealth = player[0].health;
-            playerAttack = player[0].attack;
-            playerBaseAttack = player[0].attack;
-            playerID = player[0].name;
-            $("#playerHP").html("<h3>Player Health: <span id='php'>"+playerHealth+"</span></h3>");
-            console.log(playerHealth,playerAttack);
-        })
-
-        // Choose your opponent
-
-        $(document).on("click", ".enemyCard", function(){
+    // Choose your opponent
+    $(document).on("click", ".enemyCard", function(){
+        if (!enemyChosen) {
+            enemyChosen = true;
             var y = ($(this).attr("id"));
             enemy = enemyArray.splice(y,1);
                 var enemyCard = $('<img>');
@@ -106,12 +104,10 @@ $(document).ready(function() {
             enemyCounter = enemy[0].counter;
             $("#enemyHP").html("<h3>Enemy Health: <span id='ehp'>"+enemyHealth+"</span></h3>");
             console.log(enemyHealth,enemyCounter);
-        })
-
-    }
+        }
+    })
 
     // Set combat Function
-
     function combat() {
         console.log(playerAttack);
         enemyHealth -= playerAttack;
@@ -124,7 +120,8 @@ $(document).ready(function() {
             gameWin();            
         } else {
             $("#instructions, #enemyZone, #ehp, #buttonZone").empty();
-            instructions("Select New Enemy")
+            instructions("Select New Enemy");
+            enemyChosen = false;
         }
         if (playerHealth <= 0){
             gameOver();
@@ -132,7 +129,6 @@ $(document).ready(function() {
     }
 
     // Set gameWin Function
-
     function gameWin (){
         $("#instructions, #enemyZone, #playerHP, #enemyHP, #buttonZone").empty();
         instructions('Congratulations, '+playerID+', you have won!');
@@ -148,7 +144,6 @@ $(document).ready(function() {
     }
 
     // Set gameOver Function
-
     function gameOver() {
         $("#cardZone, #instructions, #playerHP, #enemyHP, #buttonZone").empty();
         instructions('Sorry, '+playerID+', you have died!');
@@ -164,19 +159,16 @@ $(document).ready(function() {
     }
 
     // Set clearTop Function
-
     function clearTop(){
         $("#cardZone, #instructions").empty();
     }
 
     // Set instructions Function
-
     function instructions(x){
         $("#instructions").html(x);
     }
 
     // Set chooseEnemy Function
-
     function chooseEnemy(){
         for (var i=0; i<enemyArray.length; i++) {
             var enemyCard = $("<img>");
@@ -187,6 +179,7 @@ $(document).ready(function() {
         }
     }
 
+    // Set reset Function
     function reset (){
         playerArray = [];
         player = [];
@@ -198,9 +191,11 @@ $(document).ready(function() {
         enemyHealth = 0;
         enemyCounter = 0;
         playerID = "";
+        enemyChosen = false;
         $("#instruction, #cardZone, #playerZone, #buttonZone, #enemyZone, #playerHP, #enemyHP").empty();
         playGame();
     }
     
 playGame();
+
 });
