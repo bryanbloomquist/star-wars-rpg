@@ -12,7 +12,13 @@ header {
   font-family: Starjedi;
   text-align: center;
   width: 100%;
-  font-size: 5rem;
+  font-size: 2rem;
+  line-height: 1em;
+  margin-bottom: 25px;
+}
+
+header span {
+  font-size: 75%;
 }
 
 .luke-lightsaber {
@@ -33,13 +39,48 @@ header {
 		3px -3px 5px red;
 }
 
-.card {
-	margin: 10px;
-	width: 150px;
-	height: 210px;
-	float: left;
+.card-back {
+  width: 45%;
+  margin: 10px;
+}
+
+.card-front {
+  width: 30%;
+  margin: 5px;
 }
 
 .btn {
 	margin: auto;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  header {
+    font-size: 42px;
+  }
+  .card-back {
+    width: 150px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  header {
+    font-size: 64px;
+  }
+  header span {
+    font-size: 50%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  header {
+    font-size: 78px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
 }
