@@ -1,15 +1,45 @@
+@font-face {
+  font-family: Starjedi;
+  src: url(../fonts/Starjedi.ttf);
+}
+
 body {
-    background: url("../images/background.jpg") no-repeat center fixed;
-    background-size: cover;
+	background: url("../images/background.jpg") no-repeat center fixed;
+	background-size: cover;
+}
+
+header {
+  font-family: Starjedi;
+  text-align: center;
+  width: 100%;
+  font-size: 5rem;
+}
+
+.luke-lightsaber {
+	color: white;
+	text-shadow: 
+		3px 3px 5px lime, 
+		-3px 3px 5px lime, 
+		-3px -3px 5px lime, 
+		3px -3px 5px lime;
+}
+
+.vader-lightsaber {
+  color: white;
+	text-shadow: 
+		3px 3px 5px red, 
+		-3px 3px 5px red, 
+		-3px -3px 5px red, 
+		3px -3px 5px red;
 }
 
 .card {
-    margin: 10px;
-    width: 150px;
-    height: 210px;
-    float: left;
+	margin: 10px;
+	width: 150px;
+	height: 210px;
+	float: left;
 }
 
 .btn {
-    margin: auto;
+	margin: auto;
 }
